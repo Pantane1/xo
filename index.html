@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-top: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            margin: 20px auto;
+            justify-content: center;
+        }
+        
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            font-size: 3em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .cell:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+            border-color: #764ba2;
+        }
+        
+        .cell.x {
+            color: #667eea;
+        }
+        
+        .cell.o {
+            color: #764ba2;
+        }
+        
+        .status {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #333;
+            font-weight: bold;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .player-turn {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: #667eea;
+            color: white;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎮 Tic-Tac-Toe</h1>
+        <div class="player-turn" id="current-player">X's Turn</div>
+        
+        <div class="board" id="board">
+            <!-- Cells will be created by JavaScript -->
+        </div>
+        
+        <div class="status" id="status">Player X's turn</div>
+        <button onclick="resetGame()">New Game 🔄</button>
+    </div>
+
+    <script>
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let moveCount = 0;
+
+        const winningConditions = [
+            [0, 1, 2], // Top row
+            [3, 4, 5], // Middle row
+            [6, 7, 8], // Bottom row
+            [0, 3, 6], // Left column
+            [1, 4, 7], // Middle column
+            [2, 5, 8], // Right column
+            [0, 4, 8], // Diagonal
+            [2, 4, 6]  // Diagonal
+        ];
+
+        // Create the board
+        function createBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.setAttribute('data-index', i);
+                cell.addEventListener('click', handleCellClick);
+                boardElement.appendChild(cell);
+            }
+        }
+
+        // Handle cell clicks
+        function handleCellClick(event) {
+            const cell = event.target;
+            const index = cell.getAttribute('data-index');
+
+            if (board[index] !== '' || !gameActive) {
+                return;
+            }
+
+            makeMove(index, cell);
+        }
+
+        // Make a move
+        function makeMove(index, cell) {
+            board[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+            cell.classList.add(currentPlayer.toLowerCase());
+            moveCount++;
+
+            checkResult();
+        }
+
+        // Check for win or draw
+        function checkResult() {
+            let roundWon = false;
+
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    roundWon = true;
+                    highlightWinningCells([a, b, c]);
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                document.getElementById('status').textContent = `Player ${currentPlayer} wins! 🎉`;
+                document.getElementById('current-player').textContent = `${currentPlayer} Wins!`;
+                gameActive = false;
+                return;
+            }
+
+            if (moveCount === 9) {
+                document.getElementById('status').textContent = "It's a draw! 🤝";
+                document.getElementById('current-player').textContent = "Game Draw!";
+                gameActive = false;
+                return;
+            }
+
+            // Switch player
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            document.getElementById('status').textContent = `Player ${currentPlayer}'s turn`;
+            document.getElementById('current-player').textContent = `${currentPlayer}'s Turn`;
+        }
+
+        // Highlight winning cells
+        function highlightWinningCells(cells) {
+            cells.forEach(index => {
+                const cell = document.querySelector(`[data-index="${index}"]`);
+                cell.style.background = 'linear-gradient(135deg, #a8e6cf 0%, #d4edf5 100%)';
+                cell.style.transform = 'scale(1.05)';
+            });
+        }
+
+        // Reset the game
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            moveCount = 0;
+            
+            document.getElementById('status').textContent = "Player X's turn";
+            document.getElementById('current-player').textContent = "X's Turn";
+            
+            // Reset all cells
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.style.background = 'white';
+                cell.style.transform = 'scale(1)';
+                cell.classList.remove('x', 'o');
+            });
+        }
+
+        // Initialize the game
+        createBoard();
+    </script>
+</body>
+<!-- FOOTER -->
+<footer style="margin-top: 40px; text-align: center;">
+    <p>
+        <a href="#">
+            <img src="https://github.com/Pantane1/nf/blob/main/public/ph.png" alt="ph-logo" style="width:100px; height:auto;">
+        </a>
+    </p>
+    
+    <p>
+        <a href="#">
+            <img src="http://readme-typing-svg.herokuapp.com?color=ACAF50&center=true&vCenter=true&multiline=false&lines=LONG+LIVE+THE+NJAGI'S" alt="typing-effect">
+        </a>
+    </p>
+
+    <p style="margin-top:10px; font-size:14px; color:#888;">
+        &copy; 2026 CipherGrid. All rights reserved.
+    </p>
+</footer>
+
+</html>
