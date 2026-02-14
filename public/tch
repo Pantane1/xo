@@ -1,0 +1,29 @@
+┌─────────────────────────────────────┐
+│      TECHNOLOGY STACK                │
+├─────────────────────────────────────┤
+│                                      │
+│  🎨 Frontend                          │
+│  ├── HTML5 (Structure)                │
+│  ├── CSS3 (Styling)                   │
+│  │   ├── Flexbox/Grid                 │
+│  │   ├── Gradients                    │
+│  │   ├── Animations                   │
+│  │   └── Media Queries                 │
+│  └── JavaScript ES6+ (Logic)          │
+│      ├── DOM Manipulation             │
+│      ├── Event Handling               │
+│      ├── Array Methods                │
+│      └── Modern Syntax                │
+│                                      │
+│  🛠️ Development                        │
+│  ├── Browser DevTools                 │
+│  ├── VS Code (Recommended)            │
+│  └── Git (Version Control)            │
+│                                      │
+│  📱 Features                           │
+│  ├── Responsive Design                │
+│  ├── Mobile-First Approach            │
+│  ├── Touch Support                    │
+│  └── Keyboard Navigation              │
+│                                      │
+└─────────────────────────────────────┘
