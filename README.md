@@ -2,7 +2,7 @@
 
 A beautiful, interactive Tic-Tac-Toe game built with HTML, CSS, and JavaScript. Two players can take turns marking X and O on a 3x3 grid, with the game automatically detecting wins and draws.
 
-![Tic-Tac-Toe Game](https://via.placeholder.com/800x400.png?text=Tic-Tac-Toe+Game+Screenshot)
+![Tic-Tac-Toe Game](https://pantane1.github.io/xo/)
 
 ## 📋 Table of Contents
 - [Features](#features-)
