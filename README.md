@@ -1,4 +1,4 @@
-```markdown
+``markdown
 # Tic-Tac-Toe Game 🎮
 
 A beautiful, interactive Tic-Tac-Toe game built with HTML, CSS, and JavaScript. Two players can take turns marking X and O on a 3x3 grid, with the game automatically detecting wins and draws.
@@ -775,7 +775,7 @@ If you just want to play right now:
 
 1. Copy this minimal code:
 
-```html
+``html
 <!DOCTYPE html>
 <html>
 <head>
@@ -825,4 +825,23 @@ Thank you for checking out this Tic-Tac-Toe game! Whether you're playing, learni
 ---
 
 *Made with ❤️ for game lovers everywhere*
+
+<!-- FOOTER -->
+<footer style="margin-top: 40px; text-align: center;">
+    <p>
+        <a href="#">
+            <img src="https://github.com/Pantane1/nf/blob/main/public/ph.png" alt="ph-logo" style="width:100px; height:auto;">
+        </a>
+    </p>
+    <p>
+        <a href="#">
+            <img src="http://readme-typing-svg.herokuapp.com?color=ACAF50&center=true&vCenter=true&multiline=false&lines=LONG+LIVE+THE+NJAGI'S" alt="typing-effect">
+        </a>
+    </p>
+
+    <p style="margin-top:10px; font-size:14px; color:#888;">
+        &copy; 2026 CipherGrid. All rights reserved.
+    </p>
+</footer>
+
 ```
